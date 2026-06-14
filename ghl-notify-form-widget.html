@@ -1,0 +1,131 @@
+<!-- ============================================================
+     FalconLiving — "Notify me" form widget for GoHighLevel
+     Paste into a Custom HTML / JavaScript element.
+     Self-contained & scoped with the .fl- prefix.
+
+     >>> To actually capture leads in GHL:
+     1. In GHL: Automation > Workflows > new workflow.
+     2. Add trigger "Inbound Webhook", copy its URL.
+     3. Paste that URL into FL_WEBHOOK below.
+     4. Add a "Create/Update Contact" action mapping {{inboundWebhookRequest.email}}.
+     If you leave FL_WEBHOOK empty, the form just shows the success message.
+     ============================================================ -->
+<div class="fl-cta">
+  <div class="fl-cta-inner">
+    <h2 class="fl-cta-h2">Your next home is one click away</h2>
+    <p class="fl-cta-sub">Verified, furnished accommodation at your desired location. Be first to know when new units drop.</p>
+
+    <form class="fl-notify" id="flNotifyForm" novalidate>
+      <input type="email" name="email" placeholder="you@university.edu" aria-label="Email address" required />
+      <button type="submit">Notify me</button>
+    </form>
+    <p class="fl-msg" id="flNotifyMsg" role="status"></p>
+  </div>
+</div>
+
+<style>
+  .fl-cta {
+    font-family: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+    max-width: 980px; margin: 0 auto; padding: 24px 16px; box-sizing: border-box;
+  }
+  .fl-cta * { box-sizing: border-box; }
+  .fl-cta-inner {
+    position: relative; overflow: hidden; text-align: center;
+    padding: 56px 28px; border-radius: 28px;
+    border: 1px solid rgba(255,255,255,0.1);
+    background:
+      radial-gradient(700px 300px at 50% -20%, rgba(124,92,255,0.35), transparent 70%),
+      linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+  }
+  /* animated gradient ring */
+  .fl-cta-inner::before {
+    content: ""; position: absolute; inset: -1px; border-radius: 28px; padding: 1px;
+    background: linear-gradient(115deg, #7c5cff, #22d3ee, #ff5c9d, #7c5cff);
+    background-size: 300% 300%;
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor; mask-composite: exclude;
+    opacity: 0.6; animation: fl-flow 8s linear infinite; pointer-events: none;
+  }
+  @keyframes fl-flow { 0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%} }
+
+  .fl-cta-h2 { color:#f4f3fb; font-size: clamp(1.9rem,4vw,2.6rem); margin:0 0 12px; line-height:1.1; letter-spacing:-.02em; position:relative; }
+  .fl-cta-sub { color:#a39fc4; max-width:520px; margin:0 auto 28px; position:relative; }
+
+  .fl-notify { display:flex; gap:10px; max-width:480px; margin:0 auto; flex-wrap:wrap; justify-content:center; position:relative; }
+  .fl-notify input {
+    flex:1; min-width:220px; background:rgba(7,6,15,0.6);
+    border:1px solid rgba(255,255,255,0.12); color:#f4f3fb;
+    padding:15px 20px; border-radius:999px; font-size:1rem; outline:none;
+    transition:border-color .2s ease, box-shadow .2s ease;
+  }
+  .fl-notify input::placeholder { color:#a39fc4; }
+  .fl-notify input:focus { border-color:#7c5cff; box-shadow:0 0 0 3px rgba(124,92,255,.22); }
+  .fl-notify input.fl-invalid { border-color:#ff5c9d; box-shadow:0 0 0 3px rgba(255,92,157,.22); }
+  .fl-notify button {
+    background:linear-gradient(115deg,#7c5cff,#22d3ee); background-size:180% 180%;
+    color:#0b0a16; font-weight:700; font-size:1rem; border:0; cursor:pointer;
+    padding:15px 30px; border-radius:999px;
+    transition:transform .25s ease, box-shadow .25s ease; animation:fl-shift 6s ease infinite;
+  }
+  @keyframes fl-shift { 0%,100%{background-position:0% 50%} 50%{background-position:100% 50%} }
+  .fl-notify button:hover { transform:translateY(-3px); box-shadow:0 16px 36px -10px rgba(124,92,255,.6); }
+  .fl-notify button:disabled { opacity:.6; cursor:default; transform:none; }
+
+  .fl-msg { margin-top:16px; color:#22d3ee; font-weight:600; min-height:1.2em; opacity:0; transform:translateY(6px); transition:opacity .3s ease, transform .3s ease; position:relative; }
+  .fl-msg.fl-show { opacity:1; transform:none; }
+  .fl-msg.fl-err { color:#ff5c9d; }
+</style>
+
+<script>
+  (function () {
+    var FL_WEBHOOK = ""; // <-- paste your GHL Inbound Webhook URL here
+
+    var form = document.getElementById("flNotifyForm");
+    var input = form.querySelector('input[name="email"]');
+    var btn = form.querySelector("button");
+    var msg = document.getElementById("flNotifyMsg");
+    var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    function show(text, isError) {
+      msg.textContent = text;
+      msg.classList.toggle("fl-err", !!isError);
+      msg.classList.add("fl-show");
+    }
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var email = input.value.trim();
+      if (!EMAIL_RE.test(email)) {
+        input.classList.add("fl-invalid");
+        show("Please enter a valid email address.", true);
+        return;
+      }
+      input.classList.remove("fl-invalid");
+
+      if (!FL_WEBHOOK) {
+        show("🎉 You're on the list! We'll ping you the moment a unit drops.");
+        form.reset();
+        return;
+      }
+
+      btn.disabled = true;
+      btn.textContent = "Sending…";
+      fetch(FL_WEBHOOK, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: email, source: "FalconLiving notify widget" })
+      })
+        .then(function () {
+          show("🎉 You're on the list! We'll ping " + email + " when a unit drops.");
+          form.reset();
+        })
+        .catch(function () {
+          show("Something went wrong — please try again.", true);
+        })
+        .finally(function () {
+          btn.disabled = false;
+          btn.textContent = "Notify me";
+        });
+    });
+  })();
+</script>
