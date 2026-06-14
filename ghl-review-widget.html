@@ -1,0 +1,83 @@
+<!-- ============================================================
+     FalconLiving — Review cards widget for GoHighLevel
+     Paste this whole block into a "Custom HTML / Code" element.
+     Self-contained: styles are scoped with the .fl- prefix.
+     ============================================================ -->
+<div class="fl-reviews">
+  <div class="fl-head">
+    <span class="fl-eyebrow">Reviews</span>
+    <h2 class="fl-h2">Loved by people who hate hassle</h2>
+    <p class="fl-sub">Real words from grads, travelers and professionals who booked without the runaround.</p>
+  </div>
+
+  <div class="fl-quotes">
+    <figure class="fl-quote">
+      <div class="fl-stars">★★★★★</div>
+      <blockquote>“No agent calling me ten times a day. Booking was easy and smooth.”</blockquote>
+      <figcaption>
+        <span class="fl-avatar">N</span>
+        <span><strong>New Grad</strong><em>Convenience</em></span>
+      </figcaption>
+    </figure>
+
+    <figure class="fl-quote">
+      <div class="fl-stars">★★★★★</div>
+      <blockquote>“Stunning room. Everything was exactly as listed; didn't pay any additional fees.”</blockquote>
+      <figcaption>
+        <span class="fl-avatar">V</span>
+        <span><strong>Vacationer</strong><em>Trust &amp; quality</em></span>
+      </figcaption>
+    </figure>
+
+    <figure class="fl-quote">
+      <div class="fl-stars">★★★★★</div>
+      <blockquote>“Great location for all needs.”</blockquote>
+      <figcaption>
+        <span class="fl-avatar">B</span>
+        <span><strong>Busy Professional</strong><em>Customer satisfaction</em></span>
+      </figcaption>
+    </figure>
+  </div>
+</div>
+
+<style>
+  .fl-reviews {
+    font-family: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 40px 16px;
+    color: #f4f3fb;
+    box-sizing: border-box;
+  }
+  .fl-reviews * { box-sizing: border-box; }
+  .fl-head { text-align: center; max-width: 640px; margin: 0 auto 40px; }
+  .fl-eyebrow {
+    display: inline-block; font-size: 0.78rem; font-weight: 700;
+    letter-spacing: 0.08em; text-transform: uppercase; color: #22d3ee;
+    padding: 7px 14px; border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 999px; background: rgba(255,255,255,0.04); margin-bottom: 16px;
+  }
+  .fl-h2 { font-size: clamp(1.9rem, 4vw, 2.6rem); margin: 0 0 12px; line-height: 1.1; letter-spacing: -0.02em; }
+  .fl-sub { color: #a39fc4; font-size: 1.05rem; margin: 0; }
+
+  .fl-quotes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px; }
+  .fl-quote {
+    background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 20px; padding: 30px 26px; margin: 0;
+    transition: transform 0.35s ease, border-color 0.35s ease;
+  }
+  .fl-quote:hover { transform: translateY(-6px); border-color: rgba(255,92,157,0.45); }
+  .fl-stars { color: #ffc861; letter-spacing: 2px; margin-bottom: 16px; }
+  .fl-quote blockquote { font-size: 1.08rem; font-weight: 500; margin: 0 0 22px; line-height: 1.55; }
+  .fl-quote figcaption { display: flex; align-items: center; gap: 12px; }
+  .fl-avatar {
+    width: 42px; height: 42px; border-radius: 50%; flex-shrink: 0;
+    display: grid; place-items: center; font-weight: 800; color: #0b0a16;
+    background: linear-gradient(115deg, #7c5cff 0%, #22d3ee 100%);
+  }
+  .fl-quote figcaption strong { display: block; font-size: 0.95rem; }
+  .fl-quote figcaption em { color: #a39fc4; font-size: 0.84rem; font-style: normal; }
+
+  @media (max-width: 900px) { .fl-quotes { grid-template-columns: 1fr; } }
+</style>
