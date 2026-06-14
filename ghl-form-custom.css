@@ -1,0 +1,93 @@
+/* ============================================================
+   FalconLiving — dark glass restyle for the GHL native form
+   Scoped to this form's CSS selector: #form-Zq23MYMr-u
+   (If you rebuild the form, swap the ID for the new one in
+   Styles > CSS Selector.)
+   ============================================================ */
+
+/* Kill the white background on the form and any inner wrappers */
+#form-Zq23MYMr-u,
+#form-Zq23MYMr-u div {
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+
+/* Glassy gradient card on the outer form */
+#form-Zq23MYMr-u {
+  max-width: 560px !important;
+  margin: 0 auto !important;
+  padding: 34px 30px !important;
+  border-radius: 22px !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  background:
+    radial-gradient(620px 240px at 50% -12%, rgba(124, 92, 255, 0.28), transparent 70%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02)) !important;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+
+/* Labels */
+#form-Zq23MYMr-u label {
+  color: #f4f3fb !important;
+  font-weight: 600 !important;
+  font-size: 0.95rem !important;
+  margin-bottom: 8px !important;
+}
+
+/* Helper / description / small text */
+#form-Zq23MYMr-u small,
+#form-Zq23MYMr-u p,
+#form-Zq23MYMr-u .field-description,
+#form-Zq23MYMr-u [class*="description"] {
+  color: #a39fc4 !important;
+  font-size: 0.85rem !important;
+}
+
+/* Inputs */
+#form-Zq23MYMr-u input,
+#form-Zq23MYMr-u .form-control {
+  background: rgba(7, 6, 15, 0.55) !important;
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+  color: #f4f3fb !important;
+  border-radius: 12px !important;
+  padding: 14px 16px !important;
+  font-size: 1rem !important;
+  box-shadow: none !important;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
+}
+#form-Zq23MYMr-u input::placeholder { color: #8c88ab !important; }
+#form-Zq23MYMr-u input:focus,
+#form-Zq23MYMr-u .form-control:focus {
+  border-color: #7c5cff !important;
+  box-shadow: 0 0 0 3px rgba(124, 92, 255, 0.25) !important;
+  outline: none !important;
+}
+
+/* The mail icon sitting inside the field */
+#form-Zq23MYMr-u .input-group-text,
+#form-Zq23MYMr-u .input-group-prepend,
+#form-Zq23MYMr-u svg {
+  background: transparent !important;
+  border: none !important;
+  color: #8c88ab !important;
+}
+
+/* Submit button — pill gradient with hover lift */
+#form-Zq23MYMr-u button,
+#form-Zq23MYMr-u .ghl-btn,
+#form-Zq23MYMr-u button[type="submit"] {
+  background: linear-gradient(115deg, #7c5cff, #22d3ee) !important;
+  background-size: 180% 180% !important;
+  color: #0b0a16 !important;
+  font-weight: 700 !important;
+  border: 0 !important;
+  border-radius: 999px !important;
+  padding: 15px 28px !important;
+  margin-top: 8px !important;
+  transition: transform 0.25s ease, box-shadow 0.25s ease !important;
+}
+#form-Zq23MYMr-u button:hover,
+#form-Zq23MYMr-u .ghl-btn:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 16px 36px -10px rgba(124, 92, 255, 0.6) !important;
+}
